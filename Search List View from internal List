@@ -1,0 +1,117 @@
+// Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController controller = TextEditingController();
+  String searchText;
+  List<String> medicine = [
+    'adol',
+    'panadol',
+    'cataflam',
+    'catafast',
+    'tylenol',
+    ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My List"),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(
+                  "https://wallpaperplay.com/walls/full/1/7/4/286153.jpg"),
+              fit: BoxFit.cover),
+        ),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.local_pharmacy),
+                hintText: "Enter Medicine Name",
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              controller: controller,
+              onChanged: (value) {
+                setState(() {
+                  searchText = value;
+                });
+              },
+            ),
+            FlatButton(
+              onPressed: () {
+               Navigator.push(context, MaterialPageRoute(builder:((context){
+                 return DrugDetailes(drugName: searchText,);
+               })));
+              },
+              child: Text(
+                "Search",
+                style: TextStyle(color: Colors.black, fontSize: 30),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+                itemCount: medicine.length,
+                itemBuilder: ((BuildContext context, int index) {
+                  return controller.text == null || controller.text == "" ? null : medicine[index].contains(controller.text) ? new Card(elevation:10,color:Colors.transparent,child: ListTile(title: Text(medicine[index]),leading: Icon(Icons.local_pharmacy),onTap: (){setState((){
+                    controller.text= medicine[index];
+                    searchText = controller.text;
+                    print(searchText);
+                  });},),) : new Container();
+                })),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class DrugDetailes extends StatelessWidget {
+  
+  final String drugName;
+  DrugDetailes({this.drugName});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(
+          child: Container(child:Text(drugName)),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+                                                           
