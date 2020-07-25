@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     children: [
                       ReusableContainer(
-                        height: 200,
+                        height: 150,
                         child: FlatButton(
                           onPressed: () {
                             print("hi");
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       SizedBox(height: 10),
                       ReusableContainer(
-                        height: 200,
+                        height: 150,
                         child: FlatButton(
                           onPressed: () {
                             print("hi");
