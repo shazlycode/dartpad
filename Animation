@@ -1,0 +1,214 @@
+// Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+enum Status { love, unlove }
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation colorAnimation;
+  Animation colorAnimation2;
+  Status selectedStatus;
+  
+  @override
+  void initState() {
+    controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 1),upperBound: 2);
+    colorAnimation =
+        ColorTween(begin: Colors.white, end: Colors.red).animate(controller);
+    colorAnimation2 =
+        ColorTween(begin: Colors.red, end: Colors.green).animate(controller);
+    
+    controller.forward();
+    colorAnimation2.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          controller.reverse(from: 100);
+        });
+      } else if (status == AnimationStatus.dismissed) {
+        setState(() {
+          controller.forward();
+        });
+      }
+      print(status);
+    });
+    controller.addListener(() {
+      setState(() {
+        print(controller.value);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: colorAnimation.value,
+      appBar: AppBar(
+        title: Text('Animation'),
+      ),
+      body: Center(
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: controller.value * 100),
+                child: Text("Welcome",
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(controller.value),
+                      fontSize: 50,
+                    )),
+              ),
+              Icon(Icons.favorite,color: colorAnimation2.value,),
+              Card(
+                  elevation: 5,
+                  child: ListTile(
+                    title: Text("Amazing Trip to the Moon"),
+                    subtitle: Text("by rocket"),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Image.network(
+                          "https://ei.marketwatch.com/Multimedia/2012/11/09/Photos/MG/MW-AW150_smpass_20121109102048_MG.jpg?uuid=144e8e98-2a81-11e2-825a-002128040cf6",
+                          fit: BoxFit.cover),
+                    ),
+                    trailing: GestureDetector(
+                      child: Icon(
+                        Icons.favorite,size: selectedStatus == Status.love? 25:20,
+                        color: selectedStatus == Status.love
+                            ? colorAnimation.value
+                            : Colors.grey,
+                      ),
+                      onTap: () {
+                        if (selectedStatus == Status.love) {
+                          setState(() {
+                            selectedStatus = Status.unlove;
+                          });
+                        }else{
+                          setState(() {
+                            selectedStatus = Status.love;
+                          });
+                        }
+                      },
+                    ),
+                  )),
+              Card(
+                  elevation: 5,
+                  child: ListTile(
+                    title: Text("Amazing Trip to the Moon"),
+                    subtitle: Text("by rocket"),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Image.network(
+                          "https://ei.marketwatch.com/Multimedia/2012/11/09/Photos/MG/MW-AW150_smpass_20121109102048_MG.jpg?uuid=144e8e98-2a81-11e2-825a-002128040cf6",
+                          fit: BoxFit.cover),
+                    ),
+                    trailing: GestureDetector(
+                      child: Icon(
+                        Icons.favorite,size: selectedStatus == Status.love? 25:20,
+                        color: selectedStatus == Status.love
+                            ? colorAnimation.value
+                            : Colors.grey,
+                      ),
+                      onTap: () {
+                        if (selectedStatus == Status.love) {
+                          setState(() {
+                            selectedStatus = Status.unlove;
+                          });
+                        }else{
+                          setState(() {
+                            selectedStatus = Status.love;
+                          });
+                        }
+                      },
+                    ),
+                  )),
+              Card(
+                  elevation: 5,
+                  child: ListTile(
+                    title: Text("Amazing Trip to the Moon"),
+                    subtitle: Text("by rocket"),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Image.network(
+                          "https://ei.marketwatch.com/Multimedia/2012/11/09/Photos/MG/MW-AW150_smpass_20121109102048_MG.jpg?uuid=144e8e98-2a81-11e2-825a-002128040cf6",
+                          fit: BoxFit.cover),
+                    ),
+                    trailing: GestureDetector(
+                      child: Icon(
+                        Icons.favorite,size: selectedStatus == Status.love? 25:20,
+                        color: selectedStatus == Status.love
+                            ? colorAnimation.value
+                            : Colors.grey,
+                      ),
+                      onTap: () {
+                        if (selectedStatus == Status.love) {
+                          setState(() {
+                            selectedStatus = Status.unlove;
+                          });
+                        }else{
+                          setState(() {
+                            selectedStatus = Status.love;
+                          });
+                        }
+                      },
+                    ),
+                  )),Card(
+                  elevation: 5,
+                  child: ListTile(
+                    title: Text("Amazing Trip to the Moon"),
+                    subtitle: Text("by rocket"),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Image.network(
+                          "https://ei.marketwatch.com/Multimedia/2012/11/09/Photos/MG/MW-AW150_smpass_20121109102048_MG.jpg?uuid=144e8e98-2a81-11e2-825a-002128040cf6",
+                          fit: BoxFit.cover),
+                    ),
+                    trailing: GestureDetector(
+                      child: Icon(
+                        Icons.favorite,size: selectedStatus == Status.love? 25:20,
+                        color: selectedStatus == Status.love
+                            ? colorAnimation.value
+                            : Colors.grey,
+                      ),
+                      onTap: () {
+                        if (selectedStatus == Status.love) {
+                          setState(() {
+                            selectedStatus = Status.unlove;
+                          });
+                        }else{
+                          setState(() {
+                            selectedStatus = Status.love;
+                          });
+                        }
+                      },
+                    ),
+                  )),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
